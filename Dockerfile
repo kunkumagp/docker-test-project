@@ -1,4 +1,3 @@
-FROM node:alpine
-COPY . /app
-WORKDIR /app
-CMD node app.js
+FROM nginx
+COPY . /usr/share/nginx/html
+# WORKDIR /app

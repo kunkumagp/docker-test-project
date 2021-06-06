@@ -1,0 +1,36 @@
+version: "3"
+networks: 
+    laravel:
+
+services: 
+    nginx:
+        image: nginx:stable-alpine
+        container_name: nginx
+        ports: 
+            - *8001:80*
+        volumes: 
+            - ./src:/var/www/html
+        depends_on: 
+            - php
+            - mysql
+        networks: 
+            - laravel
+
+    mysql:
+        image: mysql
+        container_name: mysql
+        restart: unless-stopped
+        tty: true
+        ports: 
+            - 3306:3306
+        volumes: 
+            - ./mysql:/var/lib/mysql
+        env_file:
+            - ./env/mysql.env
+            
+        networks: 
+            - laravel
+
+    php:
+        networks: 
+            - laravel
